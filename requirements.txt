@@ -7,3 +7,4 @@ MarkupSafe==2.1.5
 prettytable==3.10.2
 wcwidth==0.2.13
 Werkzeug==3.0.3
+gunicorn
