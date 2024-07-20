@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sessions</title>
+</head>
+<body>
+    <h1>Sessions</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Sessions</th>
+                <th>Username</th>
+                <th>Status</th>
+                <th>Targets</th>
+                <th>Check-In Time</th>
+                <th>Operating System</th>
+                <th>Actions</th>
+                <th>Admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+            <tr>
+                <td>{{ session[0] }}</td>
+                <td>{{ session[1] }}</td>
+                <td>{{ session[2] }}</td>
+                <td>{{ session[3] }}</td>
+                <td>{{ session[4] }}</td>
+                <td>{{ session[5] }}</td>
+                <td>
+                    <form action="{{ url_for('kill_session', session_id=session[0]) }}" method="post">
+                        <button type="submit">Kill</button>
+                    </form>
+                    <a href="{{ url_for('session', session_id=session[0]) }}">Interact</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    <a href="/">Back to Home</a>
+</body>
+</html>

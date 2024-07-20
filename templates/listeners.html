@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listeners</title>
+</head>
+<body>
+    <h1>Create a Listener</h1>
+    <form method="post">
+        <label for="host_ip">Host IP:</label>
+        <input type="text" id="host_ip" name="host_ip" required><br>
+        <label for="host_port">Host Port:</label>
+        <input type="text" id="host_port" name="host_port" required><br>
+        <button type="submit">Create Listener</button>
+    </form>
+    <p>Current Listeners: {{ listener_counter }}</p>
+<a href="/">Back to Home</a>
+</body>
+</html>

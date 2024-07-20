@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Command and Control Interface</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('listeners') }}">Listeners</a></li>
+            <li><a href="{{ url_for('generate_payload_view') }}">Generate Payload</a></li>
+            <li><a href="{{ url_for('sessions') }}">Sessions</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

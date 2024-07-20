@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Payload</title>
+</head>
+<body>
+    <h1>Generate a Payload</h1>
+    <form method="post">
+        <label for="payload_type">Payload Type:</label>
+        <select id="payload_type" name="payload_type" required>
+            <option value="winplant">Windows Payload</option>
+            <option value="linplant">Linux Payload</option>
+            <option value="exeplant">Executable Payload</option>
+        </select><br>
+        <label for="host_ip">Host IP:</label>
+        <input type="text" id="host_ip" name="host_ip" required><br>
+        <label for="host_port">Host Port:</label>
+        <input type="text" id="host_port" name="host_port" required><br>
+        <button type="submit">Generate Payload</button>
+    </form>
+<a href="/">Back to Home</a>
+</body>
+</html>
