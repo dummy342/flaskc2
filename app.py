@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 import socket
 import threading
+from flask_cors import CORS
 import time
 from datetime import datetime
 import base64
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = 'your_secret_key'
 
 targets = []
