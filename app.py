@@ -133,5 +133,21 @@ def session(session_id):
         return jsonify(response=response)
     return render_template('session.html', session_id=session_id, target=targets[session_id])
 
+@app.route('/get_my_ip')
+def get_my_ip():
+    response = requests.get('https://api.ipify.org?format=json')
+    ip = response.json().get('ip')
+    return f'Your public IP address is: {ip}'
+
+@app.route('/env_vars')
+def env_vars():
+    env_vars = os.environ
+    return jsonify({key: value for key, value in env_vars.items()})
+
+@app.route('/client_ip')
+def client_ip():
+    return f'Client IP address: {request.remote_addr}'
+
+
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
